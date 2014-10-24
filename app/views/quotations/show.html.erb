@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+ 
+<% @vehicle=Vehicle.find_by_quotation_id(@quotation.id)%>
+ <h2>Quotation: <%= @quotation.id %> </h2>
+<p>
+  <strong>Identification:</strong>
+  <%= @quotation.identification %>
+</p>
+
+<p>
+  <strong>Quotation Premium:</strong>
+  <%=number_to_currency( @quotation.quotepremium, :unit => "&pound") %>
+</p>
+<p>
+  <strong>Date Calculated:</strong>
+  <%=time_ago_in_words( @quotation.created_at) %> ago
+</p>
+
+<p>
+  <strong>Policy excess:</strong>
+  <%= @quotation.policyexcess %>%
+</p>
+<p>
+  <strong>Breakdown cover:</strong>
+  
+   <% @covers=['No cover','hi','Roadside','At home','European'] %>
+   <%= @covers[Integer(@quotation.breakdowncover)] %>
+</p>
+<% if @quotation.windscreenrepair? %>
+ <p>
+     <strong>Windscreen repair:</strong>
+	 Included
+	 
+  </p>
+  
+  <p>
+    <strong>Excess Paid</strong>
+	 <%=@quotation.excesspaid %>%
+  </p>
+  
+  <% end %>
+
+
+<% if @vehicle %>
+<p>
+<strong>Insurance for Vehicle:</strong>
+<p><strong>Registration:</strong><%= @vehicle.registration%></p>
+<p><strong>Annual mileage:</strong><%= number_with_delimiter(@vehicle.mileage) %> km</p>
+<p><strong>Estimated value:</strong><%=number_to_currency( @vehicle.value,:unit=>"&pound",:precision=>0) %></p>
+<p>
+  <strong>Parking location:</strong>
+  <%=@vehicle.parkinglocation %>
+</p>
+<p><strong>Start of policy:</strong><%= @vehicle.policystart %></p>
+</p>
+<% end %>
+
+<p><strong>Person:</strong>
+<%= @quotation.user.firstname + '  ' +@quotation.user.surname%>
+</p>
+<% if is_admin? %>
+<%= link_to 'Back', quotations_path,class:'btn btn-default' %>
+<% end %>

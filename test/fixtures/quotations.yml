@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  identification: kgedwashye
+  quotepremium: 15
+  policyexcess: 16
+  breakdowncover: 3
+  windscreenrepair: true
+  excesspaid: 5
+  user_id: 1
+  
+two:
+  identification: efdwwwltng
+  quotepremium: 1
+  policyexcess: 16
+  breakdowncover: 3
+  windscreenrepair: true
+  excesspaid: 5
+  user_id: 2

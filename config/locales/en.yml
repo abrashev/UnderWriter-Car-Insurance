@@ -1,0 +1,69 @@
+en:
+  are-you-sure:             "Are you sure?"
+  back:                     "Back"
+  destroy:                  "Destroy"
+  destroy-item:             "Destroy item"
+  edit:                     "Edit"
+  edit-item:                "Edit item"
+  close:                    "Close"
+  show:                     "Show"
+  show-details:             "Show details"
+  email:                    "Email"
+  phone:                    "Phone"
+  grad-year:                "Grad. year"
+  jobs:                     "Jobs"
+  account-state:            "Account state"
+  surname:                  "Surname"
+  firstname:                "First name"
+  state:                    "State"
+  image:                    "Image"
+  update:                   "Update"
+  please-wait:              "Please wait"
+  create:                   "Create"
+  
+  layout:
+    title:                  "Car Insurance System - Version 1.0"
+
+  sessions:
+    welcome-guest:          "Welcome Guest"
+    forgot-password:        "Forgot password?"
+    register:               "Register"
+    welcome:                "Welcome"
+    login:                  "Log in"
+    logout:                 "Log out"
+    password:               "Password"
+    remember:               "Remember me"
+    login-success:          "Logged in successfully"
+    logout-success:         "You have been logged out"
+    login-failure:          "Couldn't log you"
+    change-password:        "Change password"
+    old-password:           "Old password"
+    new-password:           "New password"
+    password-size:          "Between 4 and 40 characters"
+    new-password-confirm:   "Confirm new password"
+    password-confirm:       "Confirm password"
+    password-reset:         "Password Reset Request"
+    password-reset-message: "Enter your email address that we have on our file and click send. We will send you a password reset link email to your email address."
+    email-address:          "Email address"
+    send:                   "Send"
+    reset-password:         "Reset password"
+    must-be-admin:          "You must be an admin to do that"
+
+  users:
+    editing-account:        "Editing account"
+    we-accept:              "We accept JPEG, GIF, or PNG files up to 500 KB"
+    accounts:               "User accounts"
+    search-accounts:        "Search accounts"
+    search:                 "Search"
+    search-instruction:     "Enter search phrase, or leave blank to retrieve all records"
+    sign-up:                "Sign up as a new user"
+    not-your-account:       "This is not your account, access denied"
+    account-no-exists:      "Account no longer exists"
+    account-created:        "Account was successfully created"
+    thanks:                 "Thanks for signing up!  We're sending you an email with your activation code"
+    
+
+ 
+    
+    
+  

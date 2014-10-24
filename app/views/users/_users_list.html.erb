@@ -1,0 +1,56 @@
+<% if users_list.length > 0 %>
+
+<table class="table table-bordered" >
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Surname</th>
+      <th>Firstname</th>
+       
+      <th>Date of Birth</th>
+
+      <th>Licence type</th>
+      <th>Licence period</th>
+     <th>Occupation</th>
+	 <th>Number of Incidents</th>
+      <th></th>
+      <th></th>
+       
+    </tr>
+  </thead>
+
+  <tbody>
+    <% users_list.each do |user| %>
+	 
+      <tr>
+        <td><%= user.title %></td>
+        <td><%= user.surname %></td>
+        <td><%= user.firstname %></td>
+          
+        <td><%= user.dateofbirth %></td>
+        
+        <td> <% if user.licencetype? then %>
+			Full
+	<% else %>Provisional<% end %></td>
+        <td><%= user.licenceperiod %> years</td>
+         <td><%= user.occupation.name %></td>
+		 <td><%= user.incidents.count %></td>
+        <td><%= link_to 'Show', user,class:'btn btn-primary' %></td>
+       
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' },
+        class:'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+	
+  </tbody>
+</table>
+<% end %>
+<br>
+
+<div class="digg_pagination">
+  <div class="container">
+  <%= page_entries_info users_list %>
+ 
+</div><%= will_paginate users_list, container: false %>
+</div>
+

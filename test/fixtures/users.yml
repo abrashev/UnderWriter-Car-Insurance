@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: Mr
+  surname: Petkov
+  firstname: Stoyan
+  phone: 235346
+  dateofbirth: 1987-10-10
+  licencetype: false
+  licenceperiod: 4
+  occupation: 4
+
+two:
+  title: Mrs
+  surname: Ivanova
+  firstname: Penka
+  phone: 5346436
+  dateofbirth: 1990-11-05
+  licencetype: true
+  licenceperiod: 2
+  occupation: 2

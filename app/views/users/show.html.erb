@@ -1,0 +1,75 @@
+<div class="container">
+ <div class="row">
+        
+  <p>
+  <strong>Title: <%= @user.title %></strong>
+  
+</p>
+
+<p>
+  <strong>Surname:</strong>
+  <%= @user.surname %>
+</p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @user.firstname %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= number_to_phone(@user.phone, :area_code => true, :delimiter => " ") %>
+  
+</p>
+
+<p>
+  <strong>Date of birth:</strong>
+  <%= @user.dateofbirth %>
+</p>
+
+<p>
+  <strong>License type:</strong>
+  <% if @user.licencetype? then  %>
+  <strong>Full</strong>
+	<% else %>
+	<strong>Provisional</strong>
+		<%end %>
+</p>
+
+<p>
+  <strong>License period:</strong>
+  <%= @user.licenceperiod %> years
+</p>
+ 
+<p>
+  <strong>Occupation:</strong>
+  <%= @user.occupation.name %>
+</p>
+
+<p>
+  <strong>Driver History:</strong>
+  <%= @user.incidents.count %> incident(s)
+</p>
+
+<p>
+
+<%  @user.incidents.each do |us| %>
+ 
+<p>date:<%=  us.dateofincident %>
+value:<%=  us.valueofclaim %>
+type:<%=  us.typeofincident %>
+description:<%=  us.description %></p>
+<% end %>
+</p>
+<p>
+  ADDRESS:
+  <h4><%= @user.address.street %></h4>
+  <h5><%= @user.address.city %></h5>
+  <h5><%= @user.address.county %></h5>
+  <h5><%= @user.address.postcode %></h5>
+</p>
+<%= link_to 'Edit', edit_user_path,class:'btn btn-default' %>
+<%= link_to 'Back', :home,class:'btn btn-default' %>
+</div>
+
+</div>

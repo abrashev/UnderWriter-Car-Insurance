@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  registration: MyString
+  mileage: 42
+  value: 1
+  parkinglocation: MyString
+  policystart: 2013-11-18
+
+two:
+  registration: MyString
+  mileage: 40
+  value: 12
+  parkinglocation: MyString
+  policystart: 2013-11-18

@@ -1,0 +1,203 @@
+<h2><%= I18n.t('users.sign-up') %></h2>
+
+<%= form_for(@user, html: {multipart: true}) do |user_form| %>
+
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%= hidden_field_tag 'page', @current_page %>
+
+<div>
+    <%= user_form.label :title, 'Title' %><br />
+
+	<select id="user_title" name="user[title]"> <option value="Mr"  selected="selected">Mr</option>
+																				
+																				   
+																					<option value="Mrs">Mrs</option>
+																				
+																				   
+																					<option value="Miss">Miss</option>
+																				
+																				   
+																					<option value="Ms">Ms</option>
+																				
+																				   
+																					<option value="Doctor">Doctor</option>
+																				
+																				   
+																					<option value="Captain">Captain</option>
+																				
+																				   
+																					<option value="Duchess">Duchess</option>
+																				
+																				   
+																					<option value="Duke">Duke</option>
+																				
+																				   
+																					<option value="Father">Father</option>
+																				
+																				   
+																					<option value="General">General</option>
+																				
+																				   
+																					<option value="Lady">Lady</option>
+																				
+																				   
+																					<option value="Lord">Lord</option>
+																				
+																				   
+																					<option value="Lieutenant">Lieutenant</option>
+																				
+																				   
+																					<option value="Lieutenant Colonel">Lieutenant Colonel</option>
+																				
+																				   
+																					<option value="Major">Major</option>
+																				
+																				   
+																					<option value="Master">Master</option>
+																				
+																				   
+																					<option value="Professor">Professor</option>
+																				
+																				   
+																					<option value="Reverend">Reverend</option>
+																				
+																				   
+																					<option value="Sir">Sir</option>
+																				
+																				   
+																					<option value="Squire">Squire</option>
+																				
+																				   
+																					<option value="Squadron Leader">Squadron Leader</option></select>
+  
+  
+   
+     <br /> <b><%= user_form.label :firstname, I18n.t('firstname') %></b><br/>
+      <%= user_form.text_field :firstname, autofocus: 'autofocus' %>
+      <br/><br/>
+  
+
+    <div>
+      <b><%= user_form.label :surname, I18n.t('surname') %></b><br/>
+      <%= user_form.text_field :surname %>
+      <br/><br/>
+    </div>
+
+    <div>
+      <b><%= user_form.label :phone, I18n.t('phone') %></b><br/>
+      <%= user_form.telephone_field :phone %>
+      <br/><br/>
+    </div>
+ 
+  <div>
+      <b><%= user_form.label :dateofbirth, 'Date of Birth' %></b><br/>
+     <%= user_form.date_select("dateofbirth",start_year: 1990,end_year: 1995) %>
+      <br/><br/>
+    </div>
+	
+	 <div>
+      <%= radio_button_tag(:licencetype, "t","checked") %>
+<%= label_tag(:licencetype_t, "Full") %>
+<%= radio_button_tag(:licencetype, "f") %>
+<%= label_tag(:licencetype_f, "Provisional") %>
+      <br/><br/>
+    </div>
+	
+	 <div>
+      <b><%= user_form.label :licenceperiod, 'Licence Period' %></b><br/>
+	   <%=user_form.select :licenceperiod , (1..80)%>years
+      <br/><br/>
+    </div>
+ 
+  <div>
+      <b><%= user_form.label :occupation_id, 'Occupation' %></b><br/>
+	   <% cities_array = Occupation.all.map { |oc| [oc.name, oc.id] } %>
+	    <%= user_form.select :occupation_id ,options_for_select(cities_array) %>
+      <br/><br/>
+    </div>
+	
+	</div>
+	
+	
+  
+	<div class="field">
+	<%= user_form.fields_for :incidents do |inc| %>
+	  
+	  <%= inc.label :dateofincident, 'date of incident' %>
+    <%= inc.date_select ("dateofincident") %>
+	
+     <%= inc.label :valueofclaim, 'claim' %>
+    <%= inc.text_field :valueofclaim%>
+ 
+ <%= inc.label :typeofincident, 'type' %>
+    <%= inc.text_field :typeofincident%>
+	
+	
+	<%= inc.label :description, 'desc' %>
+    <%= inc.text_field :description %>
+	
+<% end %>
+</div>
+
+	<div  class='newadd'>
+	  <%= user_form.fields_for :address do |user_fields| %>
+		<strong>Address</strong>
+        <div>
+          <b><%= user_fields.label :street, 'Street' %></b><br/>
+          <%= user_fields.text_field :street %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :city, 'City' %></b><br/>
+          <%= user_fields.text_field :city %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :county, 'County' %></b><br/>
+          <%= user_fields.text_field :county %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :postcode, 'Post code' %></b><br/>
+          <%= user_fields.text_field :postcode %>
+          <br/><br/>
+        </div>
+		<% end %>
+		 </div>
+		 
+		 <div  class='newadd'>
+    <%= user_form.fields_for :user_detail do |user_fields| %>
+	
+		
+        <div>
+          <b><%= user_fields.label :email, 'Email' %></b><br/>
+          <%= user_fields.email_field :email %>
+          <br/><br/>
+        </div>
+        <div>
+          <b><%= user_fields.label :password, 'Password' %></b><br/>
+          <%= user_fields.password_field :password %>
+          <br/><br/>
+        </div>
+        <div>
+          <b><%= label_tag 'password_confirmation', 'Confirm password' %></b><br/>
+          <%= user_fields.password_field :password_confirmation %>
+          <br/><br/>
+        </div>
+    <% end %>
+    <br/>
+	    <%= user_form.submit I18n.t('create'),class:'btn btn-default' %>
+	
+	 <%= link_to I18n.t('back'), home_path,class:'btn btn-default' %>
+<% end %>
+	</div>

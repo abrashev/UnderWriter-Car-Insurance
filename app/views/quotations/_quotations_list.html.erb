@@ -1,0 +1,36 @@
+<% if quotations_list.length > 0 %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+     
+      <th>Quotepremium</th>
+      <th>Date calculated</th>
+      <th></th>
+      <th></th>
+       
+    </tr>
+  </thead>
+
+  <tbody>
+    <% quotations_list.each do |quotation| %>
+      <tr>
+      
+        <td><%= number_to_currency( quotation.quotepremium) %></td>
+        <td><%= quotation.created_at %></td>
+        <td><%= link_to 'Show', quotation,class:'btn btn-primary' %></td>
+        
+        <td><%= link_to 'Destroy', quotation, method: :delete, data: { confirm: 'Are you sure?' },
+        class:'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<br>
+<div class="digg_pagination">
+  <div class="container">
+    <%= page_entries_info quotations_list %>
+  </div>
+  <%= will_paginate quotations_list, container: false %>
+</div>

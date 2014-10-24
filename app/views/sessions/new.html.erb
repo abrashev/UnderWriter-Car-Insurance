@@ -1,0 +1,19 @@
+
+<h2>Login</h2>
+
+<%= form_tag session_path do %>
+  <div>
+    <%= label_tag 'email', 'Email' %><br />
+    <%= text_field_tag 'email', params[:email], id: 'login-input', autofocus: 'autofocus' %>
+  </div>
+  <div>
+    <%= label_tag 'password', 'Password' %><br />
+    <%= password_field_tag 'password' %><br /><br />
+  </div>
+  <div>
+    <%= submit_tag 'Log in',class: 'btn btn-primary'  %> |
+    <%= link_to 'Back', root_path ,class:'btn btn-default'%>
+  </div>
+<% end %>
+
+<%= javascript_tag "$('#login').focus()" %>

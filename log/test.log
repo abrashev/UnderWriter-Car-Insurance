@@ -1,0 +1,694 @@
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (5.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (6.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (6.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (20.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:11:43', '2013-12-08 07:11:43', 980190962)[0m
+SQLite3::SQLException: table quotations has no column named datecalculated: INSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:11:43', '2013-12-08 07:11:43', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (10.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (10.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:16:18', '2013-12-08 07:16:18', 980190962)[0m
+SQLite3::SQLException: table quotations has no column named datecalculated: INSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:16:18', '2013-12-08 07:16:18', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (8.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (10.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (1.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:20:44', '2013-12-08 07:20:44', 980190962)[0m
+SQLite3::SQLException: table quotations has no column named datecalculated: INSERT INTO "quotations" ("identification", "quotepremium", "datecalculated", "created_at", "updated_at", "id") VALUES ('MyString', 1, '2013-11-18', '2013-12-08 07:20:44', '2013-12-08 07:20:44', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (19.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (1.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('hdvrv', 15, 16, '2013-12-08 07:23:04', '2013-12-08 07:23:04', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('hdvrv', 15, 16, '2013-12-08 07:23:04', '2013-12-08 07:23:04', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (36.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (6.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('hdvrv', 15, 16, '2014-01-07 14:20:27', '2014-01-07 14:20:27', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('hdvrv', 15, 16, '2014-01-07 14:20:27', '2014-01-07 14:20:27', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (23.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (1.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)[0m
+SQLite3::ConstraintException: quotations.breakdowncover may not be NULL: INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, '2014-01-07 14:23:25', '2014-01-07 14:23:25', 980190962)
+  [1m[35m (2.0ms)[0m  rollback transaction
+  [1m[36m (23.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (1.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (21.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (7.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:29:48', '2014-01-07 14:29:48', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:29:48', '2014-01-07 14:29:48', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "email", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:29:48', '2014-01-07 14:29:48', 980190962, 867572539)
+SQLite3::SQLException: table users has no column named email: INSERT INTO "users" ("title", "surname", "firstname", "phone", "email", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:29:48', '2014-01-07 14:29:48', 980190962, 867572539)
+  [1m[36m (2.0ms)[0m  [1mrollback transaction[0m
+  [1m[36m (21.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (5.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (6.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (6.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (1.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:30:58', '2014-01-07 14:30:58', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:30:58', '2014-01-07 14:30:58', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "user_detailemail", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:30:58', '2014-01-07 14:30:58', 980190962, 867572539)
+SQLite3::SQLException: table users has no column named user_detailemail: INSERT INTO "users" ("title", "surname", "firstname", "phone", "user_detailemail", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:30:58', '2014-01-07 14:30:58', 980190962, 867572539)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[36m (20.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (7.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (4.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:31:21', '2014-01-07 14:31:21', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:31:21', '2014-01-07 14:31:21', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "user_detail.email", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:31:21', '2014-01-07 14:31:21', 980190962, 867572539)
+SQLite3::SQLException: table users has no column named user_detail.email: INSERT INTO "users" ("title", "surname", "firstname", "phone", "user_detail.email", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, 'stoyan2@aber.ac.uk', '1987-10-10', 'f', 4, '2014-01-07 14:31:21', '2014-01-07 14:31:21', 980190962, 867572539)
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m
+  [1m[36m (9.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (11.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (1.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (6.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:32:10', '2014-01-07 14:32:10', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:32:10', '2014-01-07 14:32:10', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:32:10', '2014-01-07 14:32:10', 980190962, 867572539)
+SQLite3::SQLException: table users has no column named dataofbirth: INSERT INTO "users" ("title", "surname", "firstname", "phone", "dataofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:32:10', '2014-01-07 14:32:10', 980190962, 867572539)
+  [1m[36m (2.0ms)[0m  [1mrollback transaction[0m
+  [1m[36m (20.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (5.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (4.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:32:40', '2014-01-07 14:32:40', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:32:40', '2014-01-07 14:32:40', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:32:40', '2014-01-07 14:32:40', 980190962, 867572539)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mrs', 'Ivanova', 'Penka', 5346436, '1990-11-05', 't', 2, '2014-01-07 14:32:40', '2014-01-07 14:32:40', 298486374, 450215437)[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "vehicles"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 42, 1, 'MyString', '2013-11-18', '2014-01-07 14:32:40', '2014-01-07 14:32:40', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 40, 12, 'MyString', '2013-11-18', '2014-01-07 14:32:40', '2014-01-07 14:32:40', 298486374)
+  [1m[36m (8.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+--------------------------------------------
+UserTest: test_invalid_with_empty_attributes
+--------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUserDetail Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "user_details" WHERE "user_details"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (21.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (6.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (1.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:34:09', '2014-01-07 14:34:09', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:34:09', '2014-01-07 14:34:09', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:34:09', '2014-01-07 14:34:09', 980190962, 867572539)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mrs', 'Ivanova', 'Penka', 5346436, '1990-11-05', 't', 2, '2014-01-07 14:34:09', '2014-01-07 14:34:09', 298486374, 450215437)[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "vehicles"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 42, 1, 'MyString', '2013-11-18', '2014-01-07 14:34:09', '2014-01-07 14:34:09', 980190962)[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 40, 12, 'MyString', '2013-11-18', '2014-01-07 14:34:09', '2014-01-07 14:34:09', 298486374)
+  [1m[36m (8.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+--------------------------------------------
+UserTest: test_invalid_with_empty_attributes
+--------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUserDetail Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "user_details" WHERE "user_details"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (22.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (4.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:53:19', '2014-01-07 14:53:19', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:53:19', '2014-01-07 14:53:19', 298486374)
+  [1m[36mFixture Delete (1.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:53:19', '2014-01-07 14:53:19', 980190962, 867572539)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mrs', 'Ivanova', 'Penka', 5346436, '1990-11-05', 't', 2, '2014-01-07 14:53:19', '2014-01-07 14:53:19', 298486374, 450215437)[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "vehicles"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 42, 1, 'MyString', '2013-11-18', '2014-01-07 14:53:19', '2014-01-07 14:53:19', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 40, 12, 'MyString', '2013-11-18', '2014-01-07 14:53:19', '2014-01-07 14:53:19', 298486374)
+  [1m[36m (4.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------------
+QuotationTest: test_should_not_save_post_without_title
+------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+--------------------------------------------
+UserTest: test_invalid_with_empty_attributes
+--------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUserDetail Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "user_details" WHERE "user_details"."email" IS NULL LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (10.0ms)[0m  [1mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar(40) NOT NULL, "city" varchar(40) NOT NULL, "county" varchar(40) NOT NULL, "postcode" varchar(20) NOT NULL, "user_id" integer) [0m
+  [1m[35m (4.0ms)[0m  CREATE INDEX "index_addresses_on_user_id" ON "addresses" ("user_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "incidents" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "dateofincident" date NOT NULL, "valueofclaim" integer NOT NULL, "typeofincident" varchar(255) NOT NULL, "description" varchar(255) NOT NULL, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "occupations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "quotations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "identification" varchar(255) NOT NULL, "quotepremium" integer DEFAULT 0, "policyexcess" integer DEFAULT 16, "breakdowncover" varchar(255) NOT NULL, "windscreenrepair" boolean DEFAULT 'f', "excesspaid" integer DEFAULT 5, "user_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (6.0ms)[0m  CREATE TABLE "user_details" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(40) NOT NULL, "salt" varchar(40) NOT NULL, "crypted_password" varchar(40) NOT NULL, "user_id" integer) 
+  [1m[36m (6.0ms)[0m  [1mCREATE INDEX "index_user_details_on_user_id" ON "user_details" ("user_id")[0m
+  [1m[35m (5.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar(255) NOT NULL, "firstname" varchar(255) NOT NULL, "surname" varchar(255) NOT NULL, "phone" integer, "dateofbirth" date NOT NULL, "licencetype" boolean DEFAULT 't', "licenceperiod" varchar(255) NOT NULL, "occupation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_users_on_surname" ON "users" ("surname")[0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "vehicles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration" varchar(255) NOT NULL, "mileage" integer DEFAULT 0, "value" integer DEFAULT 0, "parkinglocation" varchar(255) NOT NULL, "policystart" date NOT NULL, "quotation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (5.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118163449')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131104203257')[0m
+  [1m[35m (4.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131105103702')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131108201257')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131117103722')
+  [1m[36m (5.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20131117143819')[0m
+  [1m[35m (5.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20131118152351')
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (1.0ms)[0m  DELETE FROM "quotations"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('kgedwashye', 15, 16, 3, 't', 5, 1, '2014-01-07 14:54:30', '2014-01-07 14:54:30', 980190962)[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "quotations" ("identification", "quotepremium", "policyexcess", "breakdowncover", "windscreenrepair", "excesspaid", "user_id", "created_at", "updated_at", "id") VALUES ('efdwwwltng', 1, 16, 3, 't', 5, 2, '2014-01-07 14:54:30', '2014-01-07 14:54:30', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mr', 'Petkov', 'Stoyan', 235346, '1987-10-10', 'f', 4, '2014-01-07 14:54:30', '2014-01-07 14:54:30', 980190962, 867572539)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "users" ("title", "surname", "firstname", "phone", "dateofbirth", "licencetype", "licenceperiod", "created_at", "updated_at", "id", "occupation_id") VALUES ('Mrs', 'Ivanova', 'Penka', 5346436, '1990-11-05', 't', 2, '2014-01-07 14:54:30', '2014-01-07 14:54:30', 298486374, 450215437)[0m
+  [1m[35mFixture Delete (0.0ms)[0m  DELETE FROM "vehicles"
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 42, 1, 'MyString', '2013-11-18', '2014-01-07 14:54:30', '2014-01-07 14:54:30', 980190962)[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "vehicles" ("registration", "mileage", "value", "parkinglocation", "policystart", "created_at", "updated_at", "id") VALUES ('MyString', 40, 12, 'MyString', '2013-11-18', '2014-01-07 14:54:30', '2014-01-07 14:54:30', 298486374)
+  [1m[36m (4.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------------
+QuotationsControllerTest: test_should_create_quotation
+------------------------------------------------------
+  [1m[36mQuotation Load (0.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "quotations"
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------
+QuotationsControllerTest: test_should_destroy_quotation
+-------------------------------------------------------
+  [1m[36mQuotation Load (1.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "quotations"
+Processing by QuotationsController#destroy as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mQuotation Load (0.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", "980190962"]]
+Redirected to http://test.host/
+Filter chain halted as :admin_required rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "quotations"
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------------
+QuotationsControllerTest: test_should_get_edit
+----------------------------------------------
+  [1m[36mQuotation Load (0.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+-----------------------------------------------
+QuotationsControllerTest: test_should_get_index
+-----------------------------------------------
+  [1m[35mQuotation Load (0.0ms)[0m  SELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1  [["id", 980190962]]
+Processing by QuotationsController#index as HTML
+Redirected to http://test.host/
+Filter chain halted as :admin_required rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+---------------------------------------------
+QuotationsControllerTest: test_should_get_new
+---------------------------------------------
+  [1m[36mQuotation Load (0.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+Processing by QuotationsController#new as HTML
+Redirected to http://test.host/session/new
+Filter chain halted as :login_required rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------
+QuotationsControllerTest: test_should_show_quotation
+----------------------------------------------------
+  [1m[35mQuotation Load (0.0ms)[0m  SELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1  [["id", 980190962]]
+Processing by QuotationsController#show as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mQuotation Load (0.0ms)[0m  [1mSELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1[0m  [["id", "980190962"]]
+Completed 500 Internal Server Error in 2ms
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+------------------------------------------------------
+QuotationsControllerTest: test_should_update_quotation
+------------------------------------------------------
+  [1m[35mQuotation Load (1.0ms)[0m  SELECT "quotations".* FROM "quotations" WHERE "quotations"."id" = ? LIMIT 1  [["id", 980190962]]
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+--------------------------------------------
+UsersControllerTest: test_should_create_user
+--------------------------------------------
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+  [1m[35m (1.0ms)[0m  SELECT COUNT(*) FROM "users"
+  [1m[36mAddress Load (0.0ms)[0m  [1mSELECT "addresses".* FROM "addresses" WHERE "addresses"."user_id" = ? ORDER BY "addresses"."id" ASC LIMIT 1[0m  [["user_id", 980190962]]
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+---------------------------------------------
+UsersControllerTest: test_should_destroy_user
+---------------------------------------------
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 980190962]]
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+Processing by UsersController#destroy as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", "980190962"]]
+Redirected to http://test.host/
+Filter chain halted as :admin_required rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 1.0ms)
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+-----------------------------------------
+UsersControllerTest: test_should_get_edit
+-----------------------------------------
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 980190962]]
+Processing by UsersController#edit as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", "980190962"]]
+Redirected to http://test.host/session/new
+Filter chain halted as :login_required rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+------------------------------------------
+UsersControllerTest: test_should_get_index
+------------------------------------------
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 980190962]]
+Processing by UsersController#index as HTML
+Redirected to http://test.host/
+Filter chain halted as :admin_required rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------
+UsersControllerTest: test_should_get_new
+----------------------------------------
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+Processing by UsersController#new as HTML
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mOccupation Load (0.0ms)[0m  SELECT "occupations".* FROM "occupations"
+  Rendered sessions/_login.html.erb (1.0ms)
+Completed 200 OK in 5465ms (Views: 5410.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+UsersControllerTest: test_should_show_user
+------------------------------------------
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"980190962"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", "980190962"]]
+Redirected to http://test.host/session/new
+Filter chain halted as :login_required rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+--------------------------------------------
+UsersControllerTest: test_should_update_user
+--------------------------------------------
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 980190962]]
+  [1m[35mAddress Load (0.0ms)[0m  SELECT "addresses".* FROM "addresses" WHERE "addresses"."user_id" = ? ORDER BY "addresses"."id" ASC LIMIT 1  [["user_id", 980190962]]
+  [1m[36m (1.0ms)[0m  [1mrollback transaction[0m

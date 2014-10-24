@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Underwriter Car Insurance Company</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  
+  <%= csrf_meta_tags %>
+</head>
+<body id="<%= params[:controller].parameterize %>_controller">
+
+
+<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home">Underwriter Car Insurance Company</a>
+        </div>
+        <div class="navbar-collapse collapse">
+         
+          <%= render_navigation %>
+        
+          <ul class="nav navbar-nav navbar-right">
+             
+            <%= render :partial => 'sessions/login' %>
+            
+       </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+<div class="container">
+  
+  <%= yield %>
+</div>
+
+ <div class="footer">
+      <div class="container">
+<!--<div id="footer">-->
+  <p>Created by Stoyko Abrashev</p>
+</div>
+</div>
+
+
+</body>
+</html>

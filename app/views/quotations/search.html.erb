@@ -1,0 +1,11 @@
+<h2>Retrieve Quotation</h2>
+<% if @quotation.length> 0 %>
+
+<%= link_to 'Show Quotation', @quotation[0],class:'btn btn-success' %>
+<% else %>
+<form>
+	<input type="text" name="q" value="" placeholder="Type your quotation identification number">
+	<input type="submit" value="Search" class="btn btn-success">
+</form>
+<p><%= link_to 'Make new Quotation', new_quotation_path,class:'btn btn-default' %></p>
+<% end %>

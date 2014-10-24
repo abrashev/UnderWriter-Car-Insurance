@@ -1,0 +1,79 @@
+<%= form_for(@quotation, html: {multipart: true}) do |f| %>
+
+  <% if @quotation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
+
+      <ul>
+      <% @quotation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+	
+  <% end %>
+<%= hidden_field_tag 'page', @current_page %>
+
+
+   
+ <div class="field">
+    <%= f.label :policyexcess %>
+	 - <%=  @quotation.policyexcess %>%
+  
+  </div>
+  
+  <div class="field">
+    <%= f.label :breakdowncover %><br>
+	 <%= f.select 'breakdowncover',
+options_for_select([['No cover',0],['Roadside',2],['At home',3],['European',4]],2) %>
+	 
+  </div>
+  <div class="field">
+     <%= f.label :windscreenrepair  %><br>
+	 <%= f.radio_button :windscreenrepair, "t" %>
+<%= f.label :windscreenrepair_t, "YES" %>
+<%= f.radio_button :windscreenrepair, "f" , :checked=>"checked"%>
+<%= f.label :windscreenrepair_f, "NO" %>
+	 
+  </div>
+  
+  <div class="field">
+    <%= f.label :excesspaid %> -
+	 <%= @quotation.excesspaid %>%
+  </div>
+  
+ 
+  <div class="field"><%= hidden_field_tag :quotation_user_id, current_user.id %></div>
+ <div class='newadd'>
+	  <%= f.fields_for :vehicle do |vehicle_fields| %>
+	  
+	  <strong>Vehicle:</strong><p>
+<h5>Registration:<%= vehicle_fields.text_field :registration %></h5>
+
+<h5>Annual mileage:<%= vehicle_fields.text_field :mileage %></h5>
+<h5>Estimated value:<%= vehicle_fields.text_field :value %></h5>
+<h5>Parking Location:
+<select id="quotation_vehicle_attributes_parkinglocation" name="quotation[vehicle_attributes][parkinglocation]">
+<option value="">Select</option>
+																	
+																	<option value="driveway">Driveway/Carport</option>
+																	
+																	<option value="garage">Locked Garage</option>
+																	
+																	<option value="public">Public Place</option>
+																	
+																	<option value="private">Private Property</option>
+																	
+																	<option value="road">Street/Road</option>
+																	
+																	<option value="unlocked">Unlocked Garage</option></select>
+</h5>
+<h5>Start of policy:<%= vehicle_fields.date_select :policystart %></h5>
+	
+	  </div>
+	  <% end %>
+	 
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

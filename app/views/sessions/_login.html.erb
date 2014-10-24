@@ -1,0 +1,29 @@
+<% user = current_user
+   if !user %>
+   
+ <li> <% flash.each do |key, value| %>
+        <span id="flash" class="flash_<%= key %>">
+          <span id="flash_message"><%= value %></span>
+        </span>
+      <% end %></li>
+      <li><span class="label label-default">Welcome Guest</span></li>
+      <li><%= button_to 'Register',  new_user_path,method: :get,class:'btn btn-primary btn-sm' %></li>
+	   <li><%= button_to 'Log in', new_session_path, method: :get,class:'btn btn-primary btn-sm' %></li>
+    
+<% end %>
+
+
+<% if user %>
+	<li> <% flash.each do |key, value| %>
+        <span id="flash" class="flash_<%= key %>">
+          <span id="flash_message"><%= value %></span>
+        </span>
+      <% end %></li>
+      <li><span class="label label-success">Welcome <%= user.user.firstname %></span></li>
+      <li><%= button_to 'Log out', session_path, method: :delete,class:'btn btn-danger btn-sm' %></li>
+  
+  <% end %>
+ 
+
+
+

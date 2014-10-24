@@ -1,0 +1,180 @@
+<%= form_for(@user, html: {multipart: true}) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+	<select id="user_title" name="user[title]"><option value="<%=@user.title %>" selected="selected"><%=@user.title %></option>
+																				
+																				   
+																					<option value="Mr">Mr</option>
+																				
+																				   
+																					<option value="Mrs">Mrs</option>
+																				
+																				   
+																					<option value="Miss">Miss</option>
+																				
+																				   
+																					<option value="Ms">Ms</option>
+																				
+																				   
+																					<option value="Doctor">Doctor</option>
+																				
+																				   
+																					<option value="Captain">Captain</option>
+																				
+																				   
+																					<option value="Duchess">Duchess</option>
+																				
+																				   
+																					<option value="Duke">Duke</option>
+																				
+																				   
+																					<option value="Father">Father</option>
+																				
+																				   
+																					<option value="General">General</option>
+																				
+																				   
+																					<option value="Lady">Lady</option>
+																				
+																				   
+																					<option value="Lord">Lord</option>
+																				
+																				   
+																					<option value="Lieutenant">Lieutenant</option>
+																				
+																				   
+																					<option value="Lieutenant Colonel">Lieutenant Colonel</option>
+																				
+																				   
+																					<option value="Major">Major</option>
+																				
+																				   
+																					<option value="Master">Master</option>
+																				
+																				   
+																					<option value="Professor">Professor</option>
+																				
+																				   
+																					<option value="Reverend">Reverend</option>
+																				
+																				   
+																					<option value="Sir">Sir</option>
+																				
+																				   
+																					<option value="Squire">Squire</option>
+																				
+																				   
+																					<option value="Squadron Leader">Squadron Leader</option></select>
+	 
+  </div>
+  <div class="field">
+    <%= f.label :surname %><br>
+    <%= f.text_field :surname %>
+  </div>
+  <div class="field">
+    <%= f.label :firstname %><br>
+    <%= f.text_field :firstname %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br>
+    <%= f.telephone_field :phone, :placeholder => 'Enter text here...'%>
+  </div>
+ 
+  <div class="field">
+    <%= f.label :dateofbirth %><br>
+    <%= f.date_select("dateofbirth",start_year: 1935,end_year: 1995) %>
+  </div>
+
+  <div class="field">
+  
+   
+     <%= f.label :licencetype %><br>
+	
+	  <% if @user.licencetype? then  %>
+   <%= f.radio_button :licencetype, "t", :checked=> "checked" %>
+<%= f.label :licencetype_t, "Full" %>
+<%= f.radio_button :licencetype, "f" %>
+<%= f.label :licencetype_f, "Provisional"%>
+	<% else %>
+	<%= f.radio_button :licencetype, "t"%>
+<%= f.label :licencetype_t, "Full" %>
+<%= f.radio_button :licencetype, "f", :checked=> "checked" %>
+<%= f.label :licencetype_f, "Provisional"%>
+		<% end %>
+		
+  </div>
+  <div class="field">
+    <%= f.label :licenceperiod %><br>
+    <%= f.select :licenceperiod , (1..80) %> years
+	
+  </div>
+ 
+		<div>
+       <b><%= f.label :occupation_id, 'Occupation' %></b><br/>
+	    <% occ_array = Occupation.all.map { |oc| [oc.name, oc.id] } %>
+	    <%= f.select :occupation_id ,options_for_select(occ_array,@user.occupation_id) %>
+	  
+        </div>
+		
+		   <%= f.fields_for :incidents do |inc| %>
+	<div class="field">
+	 
+     <%= inc.label :dateofincident, 'Date of Incident' %>
+    <%= inc.date_select ("dateofincident") %>
+	<%= inc.label :valueofclaim, 'Value of Claim' %>
+    <%= inc.text_field :valueofclaim%>
+ 
+ <%= inc.label :typeofincident, 'Type of Incident' %>
+    <%= inc.text_field :typeofincident%>
+	
+	
+	<%= inc.label :description, 'Description' %>
+    <%= inc.text_field :description %>
+  </div>
+  
+<% end %>
+
+
+   <%= f.fields_for :address do |user_fields| %>
+	
+		<strong>Address</strong>
+        <div>
+          <b><%= user_fields.label :street, 'Street' %></b><br/>
+          <%= user_fields.text_field :street %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :city, 'City' %></b><br/>
+          <%= user_fields.text_field :city %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :county, 'County' %></b><br/>
+          <%= user_fields.text_field :county %>
+          <br/><br/>
+        </div>
+		<div>
+          <b><%= user_fields.label :postcode, 'Post code' %></b><br/>
+          <%= user_fields.text_field :postcode %>
+          <br/><br/>
+        </div>
+		
+		
+		 <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
