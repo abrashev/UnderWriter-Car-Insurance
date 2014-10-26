@@ -4,10 +4,11 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 gem 'thin'
 
-gem 'simple-navigation'
+gem 'simple-navigation', '~> 3.11'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-gem 'will_paginate', '>= 3.0.pre'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

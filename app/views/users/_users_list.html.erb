@@ -47,10 +47,10 @@
 <% end %>
 <br>
 
-<div class="digg_pagination">
-  <div class="container">
+<div>
+  <div>
   <%= page_entries_info users_list %>
  
-</div><%= will_paginate users_list, container: false %>
+</div><%= will_paginate users_list, container: false, renderer: BootstrapPagination::Rails %>
 </div>
 

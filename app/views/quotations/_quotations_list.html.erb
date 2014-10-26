@@ -28,9 +28,9 @@
 </table>
 <% end %>
 <br>
-<div class="digg_pagination">
-  <div class="container">
+<div>
+  <div>
     <%= page_entries_info quotations_list %>
   </div>
-  <%= will_paginate quotations_list, container: false %>
+  <%= will_paginate quotations_list, container: false, renderer: BootstrapPagination::Rails %>
 </div>
