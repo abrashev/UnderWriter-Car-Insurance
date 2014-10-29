@@ -69,15 +69,15 @@ SimpleNavigation::Configuration.run do |navigation|
 	primary.item :quotations, 'Quotations', quotations_path, highlights_on: /(^\/quotations$)|(\/quotations\?)/,if: Proc.new { is_admin? }
 	primary.item :new, 'New Quotation', new_quotation_url, if: Proc.new { logged_in? and current_user.id!=1}
 	primary.item :search, 'Retrieve Quotation', search_quotations_path, if: Proc.new { logged_in? and current_user.id!=1}
-	primary.item :profile, 'Profile', show_user, highlights_on: /\/users\/\d/,if: Proc.new { current_user } 
+	primary.item :profile, 'My Profile', show_user, highlights_on: /\/users\/\d/,if: Proc.new { current_user },:unless => Proc.new { is_admin? }
 	#primary.item :home, 'Home', '/home', highlights_on: /(^\/$)|(^\/home)/
     # You can also specify a condition-proc that needs to be fullfilled to display an item.
     # Conditions are part of the options. They are evaluated in the context of the views,
     # thus you can use all the methods and vars you have available in the views.
 	
     #primary.item :key_3, 'Admin', url, :class => 'special', :if => Proc.new { current_user.admin? }
-    #primary.item :key_4, 'Account', url, :unless => Proc.new { logged_in? }
-	
+   # primary.item :key_4, 'Account', url, :unless => Proc.new { logged_in? }
+	 primary.item :account, 'Admin', show_user, id:'1',if: Proc.new { is_admin? }
     # you can also specify a css id or class to attach to this particular level
     # works for all levels of the menu
     # primary.dom_id = 'menu-id'
